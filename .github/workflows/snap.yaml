@@ -156,6 +156,7 @@ jobs:
           #     exit 1
           # fi
   debug:
+    name: Debug CI
     runs-on: ubuntu-latest
     needs:
       - build-condition
