@@ -2,7 +2,7 @@ name: Create a release
 
 env:
   BRANCH: ${{ github.ref_name }}
-  VERSION: 0.0.0.8
+  VERSION: 0.0.0.9
 
 on:
   push:
@@ -11,7 +11,7 @@ on:
       - 'v*' # Push events to matching v*, i.e. v1.0, v20.15.10
 
 jobs:
-  build:
+  checks:
     name: Check build condition for Snap
     runs-on: ubuntu-latest
     strategy:
@@ -37,6 +37,14 @@ jobs:
         name: Make sure the code follows conventions and tests correctly
         run: |
           make checks
+
+  autorelease:
+    name: release the package on PyPI
+    needs: checks
+    runs-on: 'ubuntu-latest'
+    strategy:
+      fail-fast: true
+    steps:
       - id: build-package
         name: Build package
         run: |
@@ -66,13 +74,16 @@ jobs:
             dist/spark_client-${{env.PROJECT_VERSION}}.tar.gz
 
   test:
-    name: Test Release
+    name: Check Release
     runs-on: ubuntu-latest
     needs:
-      - build
+      - autorelease
+      - checks
     steps:
-      - name: Download tar.gz file
+      - name: Curl check tar.gz file existence
         run: |
-          mkdir pkgs
-          # curl download the release and test ?
-          rm -rf pkgs
+          # check if release is now published and available
+          echo "Downloading latest available Spark package release v${{env.PROJECT_VERSION}}."
+          curl --silent "https://github.com/averma-canonical/spark-client-snap/releases/download/v${{env.PROJECT_VERSION}}/spark_client-${{env.PROJECT_VERSION}}.tar.gz" 
+          STATUSCODE=$(curl --silent --head "https://github.com/averma-canonical/spark-client-snap/releases/download/v${{env.PROJECT_VERSION}}/spark_client-${{env.PROJECT_VERSION}}.tar.gz" | head -n 1 | cut -d' ' -f2)
+          if  [[ ${STATUSCODE} -ne 200 ]]; then exit 1; fi
