@@ -2,7 +2,7 @@ name: Create a release
 
 env:
   BRANCH: ${{ github.ref_name }}
-  VERSION: 0.0.0.6
+  VERSION: 0.0.0.7
 
 on:
   push:
@@ -62,8 +62,8 @@ jobs:
         with:
           body_path: ".github/RELEASE-TEMPLATE.md"
           files: |
-            dist/spark_client-${{env.PROJECT_VERSION}}-py3-none-any.whl
-            dist/spark_client-${{env.PROJECT_VERSION}}.tar.gz
+            spark_client-${{env.PROJECT_VERSION}}-py3-none-any.whl
+            spark_client-${{env.PROJECT_VERSION}}.tar.gz
 
   test:
     name: Test Release
