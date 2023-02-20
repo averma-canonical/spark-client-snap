@@ -1,7 +1,7 @@
 name: Detect upstream Spark updates
 
 env:
-  BRANCH: main
+  BRANCH: test_pr_create
 
 on:
   schedule:
