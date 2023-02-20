@@ -67,7 +67,7 @@ jobs:
           git config author.name "GitHub <noreply@github.com>"
           git config author.email "${{ github.actor }} <${{ github.actor }}@users.noreply.github.com>"
           git commit -m "Update Spark Snap"
-
+          git push --set-upstream origin ${{ github.run_id }}-${{ github.run_attempt }}
       - name: create pull request
         id: cpr
         run: gh pr create 
