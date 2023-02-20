@@ -52,9 +52,8 @@ jobs:
     needs:
       - check-spark
     steps:
-      - id: checkout
-        name: Checkout repo
-        uses: actions/checkout@v3
+      - id: record_spark_latest_version
+        name: Record updated Spark version
         run: |
           git branch -D update-spark-snap || true
           git checkout -b update-spark-snap
