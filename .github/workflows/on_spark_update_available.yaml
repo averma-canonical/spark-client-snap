@@ -1,7 +1,7 @@
 name: Detect upstream Spark updates
 
 env:
-  BRANCH: spark_update
+  BRANCH: main
 
 #on:
 #  schedule:
@@ -55,15 +55,14 @@ jobs:
       - id: checkout
         name: Checkout repo
         uses: actions/checkout@v3
-        with:
-          ref: ${{ env.BRANCH }}
-      - name: Record the published Spark version in SPARK_VERSION file
-        uses: DamianReeves/write-file-action@master
-        with:
-          path: ./SPARK_VERSION
-          write-mode: overwrite
-          contents: |
-            ${{ needs.check-spark.outputs.version }}
+        run: |
+          git branch -D update-spark-snap || true
+          git checkout -b update-spark-snap
+          echo -n ${{ needs.check-spark.outputs.version }} > ./SPARK_VERSION
+          git add ./SPARK_VERSION
+          git config author.name "GitHub <noreply@github.com>"
+          git config author.email "${{ github.actor }} <${{ github.actor }}@users.noreply.github.com>"
+          git commit -m "Update Spark Snap"
 
       - name: create pull request
         id: cpr
