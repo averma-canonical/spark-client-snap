@@ -60,8 +60,7 @@ jobs:
         run: |
           git config user.email "abhishek.verma@canonical.com"
           git config user.name "Abhishek Verma"
-          git branch -D update-spark-snap || true
-          git checkout -b update-spark-snap
+          git checkout -b ${{ github.run_id }}-${{ github.run_attempt }}
           echo -n ${{ needs.check-spark.outputs.version }} > ./SPARK_VERSION
           git add ./SPARK_VERSION
           git config author.name "GitHub <noreply@github.com>"
