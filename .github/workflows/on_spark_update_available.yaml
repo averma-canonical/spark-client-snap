@@ -58,6 +58,8 @@ jobs:
       - id: record_spark_latest_version
         name: Record updated Spark version
         run: |
+          git config user.email "abhishek.verma@canonical.com"
+          git config user.name "Abhishek Verma"
           git branch -D update-spark-snap || true
           git checkout -b update-spark-snap
           echo -n ${{ needs.check-spark.outputs.version }} > ./SPARK_VERSION
