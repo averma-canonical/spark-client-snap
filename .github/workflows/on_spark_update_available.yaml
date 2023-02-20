@@ -1,11 +1,11 @@
 name: Detect upstream Spark updates
 
 env:
-  BRANCH: test_pr_create
+  BRANCH: main
 
 on:
   schedule:
-    - cron: '10 12 * * *'
+    - cron: '15 12 * * *'
 
 
 jobs:
