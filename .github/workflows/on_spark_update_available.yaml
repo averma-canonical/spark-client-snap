@@ -73,11 +73,11 @@ jobs:
           --title "Update snap for new spark version" 
           --body "Update client snap with new version of Apache Spark." 
           --base main 
-          --assignee team-reviewers 
+          # --assignee team-reviewers 
           --assignee deusebio
           --assignee taurus-forever
           --assignee averma-canonical 
-          --reviewer team-reviewers
+          # --reviewer team-reviewers
           --reviewer deusebio
           --reviewer taurus-forever
           --reviewer averma-canonical 
