@@ -1,7 +1,7 @@
 name: Detect upstream Spark updates
 
 env:
-  BRANCH: main
+  BRANCH: spark_update
 
 #on:
 #  schedule:
