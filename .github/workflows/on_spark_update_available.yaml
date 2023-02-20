@@ -3,10 +3,12 @@ name: Detect upstream Spark updates
 env:
   BRANCH: main
 
-on:
-  schedule:
-    - cron: '00 15 * * *'
+#on:
+#  schedule:
+#    - cron: '00 15 * * *'
 
+on:
+  pull_request:
 
 jobs:
   check-spark:
